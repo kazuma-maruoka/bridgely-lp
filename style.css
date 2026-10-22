@@ -89,6 +89,9 @@ img, svg {
 
 .sp-only { display: none; }
 
+/* 改行させたくない語句（スマホでは折り返しを許可） */
+.nowrap { white-space: nowrap; }
+
 /* ---------- ボタン ---------- */
 .btn {
   display: inline-flex;
@@ -153,6 +156,16 @@ img, svg {
 
 .eyebrow--light {
   color: #a9b6ff;
+}
+
+/* 日本語の小見出し */
+.eyebrow--ja {
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  line-height: 1.6;
 }
 
 .section {
@@ -301,11 +314,17 @@ img, svg {
   margin-top: 40px;
 }
 
+.hero__tags-label {
+  margin-top: 40px;
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
 .hero__tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 40px;
+  margin-top: 8px;
 }
 
 .hero__tags li {
@@ -319,10 +338,20 @@ img, svg {
 
 /* 右側：店舗カードのモック */
 .hero__visual {
-  position: relative;
   max-width: 420px;
   margin-left: auto;
   width: 100%;
+}
+
+.hero__mock {
+  position: relative;
+}
+
+.hero__caption {
+  margin-top: 48px;
+  font-size: 12px;
+  color: var(--color-muted);
+  text-align: center;
 }
 
 .mock {
@@ -369,19 +398,14 @@ img, svg {
   margin-top: 4px;
 }
 
-.stars {
-  color: #f5b400;
-  letter-spacing: 0;
-}
-
-.mock__review {
+.mock__info {
   margin-top: 16px;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-sub);
   padding: 12px 14px;
   background: var(--color-bg-gray);
   border-radius: var(--radius-sm);
-  line-height: 1.6;
+  line-height: 1.8;
 }
 
 .mock__actions {
@@ -418,7 +442,7 @@ img, svg {
 }
 
 .float-card--top {
-  top: 132px;
+  top: 28px;
   left: -48px;
   display: flex;
   align-items: center;
@@ -509,14 +533,14 @@ img, svg {
   transition: border-color .2s, box-shadow .2s;
 }
 
+/* 奇数個のとき、最後のカードは横幅いっぱいに */
+.service:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
 .service:hover {
   border-color: #d3d8f5;
   box-shadow: var(--shadow-sm);
-}
-
-/* 5つ目のカードは横幅いっぱいに */
-.service:last-child {
-  grid-column: 1 / -1;
 }
 
 .service__icon {
@@ -604,8 +628,10 @@ img, svg {
    ========================================================= */
 .flow {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 960px;
+  margin: 0 auto;
   position: relative;
 }
 
@@ -614,8 +640,8 @@ img, svg {
   content: "";
   position: absolute;
   top: 24px;
-  left: 10%;
-  right: 10%;
+  left: 16.7%;
+  right: 16.7%;
   height: 1px;
   background: var(--color-line);
 }
@@ -661,109 +687,24 @@ img, svg {
 /* =========================================================
    7. 料金
    ========================================================= */
-.pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  align-items: stretch;
-}
-
-.plan {
-  position: relative;
-  display: flex;
-  flex-direction: column;
+.price-box {
   background: #fff;
   border: 1px solid var(--color-line);
   border-radius: var(--radius-lg);
-  padding: 40px 32px;
-}
-
-.plan--featured {
-  border: 2px solid var(--color-accent);
-  box-shadow: var(--shadow);
-}
-
-.plan__badge {
-  position: absolute;
-  top: -14px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--color-accent);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 5px 14px;
-  border-radius: 999px;
-}
-
-.plan__name {
-  font-family: "Inter", sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-.plan__desc {
-  font-size: 14px;
-  color: var(--color-sub);
-  margin-top: 8px;
-  min-height: 3.6em;
-}
-
-.plan__price {
-  font-family: "Inter", sans-serif;
-  font-size: 40px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-top: 24px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid var(--color-line);
-  line-height: 1.2;
-}
-
-.plan__yen {
-  font-size: 22px;
-  margin-right: 2px;
-}
-
-.plan__unit {
-  font-family: var(--font);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--color-sub);
-  letter-spacing: 0;
-  margin-left: 4px;
-}
-
-.plan__features {
-  margin: 24px 0 32px;
-  flex-grow: 1;
-}
-
-.plan__features li {
-  position: relative;
-  padding-left: 28px;
-  font-size: 14px;
-  margin-bottom: 12px;
-}
-
-/* チェックマーク */
-.plan__features li::before {
-  content: "";
-  position: absolute;
-  left: 2px;
-  top: 7px;
-  width: 12px;
-  height: 7px;
-  border-left: 2px solid var(--color-accent);
-  border-bottom: 2px solid var(--color-accent);
-  transform: rotate(-45deg);
-}
-
-.pricing-note {
-  margin-top: 32px;
-  font-size: 13px;
-  color: var(--color-muted);
+  padding: 48px 40px;
   text-align: center;
+}
+
+.price-box__title {
+  font-size: clamp(18px, 2.2vw, 22px);
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.price-box__text {
+  margin: 16px 0 32px;
+  font-size: 15px;
+  color: var(--color-sub);
 }
 
 /* =========================================================
@@ -862,6 +803,11 @@ img, svg {
   position: relative;
 }
 
+/* 長いメールアドレスでグリッドの列が広がらないように */
+.cta__box > * {
+  min-width: 0;
+}
+
 .cta__title {
   font-size: clamp(26px, 3.2vw, 36px);
   line-height: 1.45;
@@ -873,34 +819,8 @@ img, svg {
   color: rgba(255, 255, 255, 0.72);
 }
 
-.cta__points {
-  margin-top: 28px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 24px;
-}
-
-.cta__points li {
-  position: relative;
-  padding-left: 22px;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.cta__points li::before {
-  content: "";
-  position: absolute;
-  left: 2px;
-  top: 8px;
-  width: 10px;
-  height: 6px;
-  border-left: 2px solid #8fa0ff;
-  border-bottom: 2px solid #8fa0ff;
-  transform: rotate(-45deg);
-}
-
-/* フォーム */
-.form {
+/* メールでのお問い合わせ */
+.contact-card {
   position: relative;
   background: #fff;
   color: var(--color-text);
@@ -908,76 +828,69 @@ img, svg {
   padding: 36px;
 }
 
-.form__row {
-  margin-bottom: 16px;
-}
-
-.form label {
-  display: block;
+.contact-card__label {
   font-size: 13px;
   font-weight: 700;
-  margin-bottom: 6px;
+  color: var(--color-sub);
 }
 
-.req {
-  display: inline-block;
-  font-size: 11px;
-  color: var(--color-accent);
-  background: var(--color-accent-soft);
-  padding: 1px 6px;
-  border-radius: 4px;
-  margin-left: 4px;
-  vertical-align: 1px;
-}
-
-.form input,
-.form select,
-.form textarea {
-  width: 100%;
-  font-family: inherit;
-  font-size: 16px; /* iPhoneで入力時に拡大されないよう16px */
-  color: var(--color-text);
-  background: var(--color-bg-gray);
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
-  padding: 12px 14px;
-  transition: border-color .2s, background-color .2s;
-}
-
-.form input:focus,
-.form select:focus,
-.form textarea:focus {
-  outline: none;
-  border-color: var(--color-accent);
-  background: #fff;
-}
-
-.form textarea {
-  resize: vertical;
-}
-
-.form .btn {
+.contact-card__address {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
   margin-top: 8px;
 }
 
-.form__error {
-  font-size: 13px;
-  color: #d93a3a;
-  margin-bottom: 8px;
+.contact-card__email {
+  display: block;
+  font-family: "Inter", sans-serif;
+  font-size: clamp(17px, 2vw, 20px);
+  font-weight: 700;
+  color: var(--color-accent);
+  overflow-wrap: anywhere; /* 狭い画面で長いアドレスがはみ出さないように */
+  min-width: 0;
+  max-width: 100%;
 }
 
-.form__done {
-  margin-top: 16px;
-  font-size: 14px;
-  font-weight: 500;
+.contact-card__email:hover {
+  text-decoration: underline;
+}
+
+.contact-card__copy {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  min-height: 36px;
+  cursor: pointer;
+  transition: background-color .2s;
+}
+
+.contact-card__copy:hover {
+  background: #e0e5ff;
+}
+
+.contact-card__copied {
+  min-height: 1.6em; /* 表示の有無でレイアウトがずれないように */
+  margin: 4px 0 12px;
+  font-size: 12px;
   color: #15803d;
-  background: #effaf3;
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
 }
 
-[hidden] {
-  display: none !important;
+.contact-card__sub {
+  margin-top: 10px;
+}
+
+.contact-card__note {
+  margin-top: 16px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--color-sub);
 }
 
 /* =========================================================
@@ -999,6 +912,21 @@ img, svg {
   margin-top: 12px;
   font-size: 14px;
   color: var(--color-sub);
+}
+
+.footer__mail {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--color-sub);
+  overflow-wrap: anywhere;
+}
+
+.footer__mail a {
+  color: var(--color-accent);
+}
+
+.footer__mail a:hover {
+  text-decoration: underline;
 }
 
 .footer__links {
@@ -1180,17 +1108,6 @@ img, svg {
   .flow__title {
     padding-top: 10px;
   }
-
-  .pricing-grid {
-    grid-template-columns: 1fr;
-    max-width: 480px;
-    margin: 0 auto;
-    gap: 28px;
-  }
-
-  .plan__desc {
-    min-height: 0;
-  }
 }
 
 /* =========================================================
@@ -1207,6 +1124,7 @@ img, svg {
 
   .sp-only { display: inline; }
   .pc-only { display: none; }
+  .nowrap { white-space: normal; }
 
   .section {
     padding: 72px 0;
@@ -1241,8 +1159,12 @@ img, svg {
     font-size: 18px;
   }
 
-  .plan {
-    padding: 36px 24px;
+  .price-box {
+    padding: 36px 22px;
+  }
+
+  .price-box .btn {
+    width: 100%;
   }
 
   .faq__item summary {
@@ -1269,8 +1191,14 @@ img, svg {
     gap: 36px;
   }
 
-  .form {
-    padding: 24px 20px;
+  .contact-card {
+    padding: 28px 20px;
+  }
+
+  .contact-card .btn {
+    white-space: normal;
+    line-height: 1.4;
+    padding: 16px;
   }
 
   .footer {

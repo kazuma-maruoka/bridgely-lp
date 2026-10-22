@@ -24,6 +24,25 @@ nav.querySelectorAll('a').forEach((link) => {
   link.addEventListener('click', closeMenu);
 });
 
+// Escキー・メニューの外側のクリックでも閉じる
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && nav.classList.contains('is-open')) {
+    closeMenu();
+    menuToggle.focus();
+  }
+});
+
+document.addEventListener('click', (event) => {
+  if (nav.classList.contains('is-open') && !nav.contains(event.target) && !menuToggle.contains(event.target)) {
+    closeMenu();
+  }
+});
+
+// PC幅に戻ったら開いた状態をリセット
+window.matchMedia('(min-width: 901px)').addEventListener('change', (event) => {
+  if (event.matches) closeMenu();
+});
+
 // ---------- 2. スクロールしたらヘッダーに下線を付ける ----------
 const header = document.getElementById('header');
 
@@ -34,27 +53,23 @@ function updateHeader() {
 window.addEventListener('scroll', updateHeader, { passive: true });
 updateHeader();
 
-// ---------- 3. お問い合わせフォーム（練習用：実際には送信しません） ----------
-const form = document.getElementById('contactForm');
-const formError = document.getElementById('formError');
-const formDone = document.getElementById('formDone');
+// ---------- 3. メールアドレスのコピー ----------
+const copyEmail = document.getElementById('copyEmail');
+const copyStatus = document.getElementById('copyStatus');
 
-form.addEventListener('submit', (event) => {
-  event.preventDefault(); // ページの再読み込みを止める
-
-  const name = form.elements.name.value.trim();
-  const email = form.elements.email.value.trim();
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  if (!name || !emailPattern.test(email)) {
-    formError.hidden = false;
-    formDone.hidden = true;
-    return;
+copyEmail.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(copyEmail.dataset.email);
+    copyStatus.textContent = 'メールアドレスをコピーしました。';
+  } catch (error) {
+    // コピーできない環境では、アドレスを選択状態にして手動コピーを案内
+    const range = document.createRange();
+    range.selectNodeContents(document.getElementById('contactEmail'));
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    copyStatus.textContent = 'アドレスを選択しました。Ctrl+C（Macは⌘+C）でコピーしてください。';
   }
-
-  formError.hidden = true;
-  formDone.hidden = false;
-  form.reset();
 });
 
 // ---------- 4. フッターの年を自動更新 ----------
